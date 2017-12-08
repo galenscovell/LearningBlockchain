@@ -67,3 +67,10 @@ jrebel.lic
 
 # paulp script
 /.lib/
+
+# visual studio
+*.suo
+.vs
+bin
+Debug
+obj

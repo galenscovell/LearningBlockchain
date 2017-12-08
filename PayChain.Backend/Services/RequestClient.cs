@@ -14,10 +14,7 @@ namespace PayChain.Backend.Services
 
         public async Task<HttpResponseMessage> MakeRequest(HttpRequestMessage request)
         {
-            using (_client)
-            {
-                return await _client.SendAsync(request);
-            }
+            return await _client.SendAsync(request);
         }
     }
 }

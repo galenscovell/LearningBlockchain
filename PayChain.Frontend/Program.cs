@@ -12,7 +12,17 @@ namespace PayChain.Frontend
         {
             try
             {
-                BuildWebHost(args).Run();
+                var config = new ConfigurationBuilder()
+                    .AddCommandLine(args)
+                    .Build();
+
+                var hostUrl = config["hosturl"];
+                if (string.IsNullOrEmpty(hostUrl))
+                {
+                    hostUrl = "http://0.0.0.0:5000";
+                }
+
+                BuildWebHost(args, config, hostUrl).Run();
             }
             catch (Exception ex)
             {
@@ -20,14 +30,14 @@ namespace PayChain.Frontend
             }
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static IWebHost BuildWebHost(string[] args, IConfigurationRoot config, string hostUrl) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseKestrel()
+                .UseUrls(hostUrl)
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseConfiguration(new ConfigurationBuilder().AddCommandLine(args).Build())
+                .UseConfiguration(config)
                 .UseIISIntegration()
                 .UseStartup<Startup>()
-                .UseApplicationInsights()
                 .Build();
     }
 }

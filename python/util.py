@@ -17,7 +17,7 @@ def valid_chain(chain):
 
     while current_idx < len(chain):
         block = chain[current_idx]
-        if block.previous_hash != hash(last_block):
+        if block.previous_hash != hash_block(last_block):
             return False
 
         last_block = block
@@ -60,7 +60,7 @@ def proof_of_work(last_proof):
     - p is the previous proof, and p' is the new proof
     """
     proof = 0
-    while valid_proof(last_proof, proof) is False:
+    while not valid_proof(last_proof, proof):
         proof += 1
 
     return proof
@@ -76,11 +76,10 @@ def valid_proof(last_proof, proof):
     return guess_hash[:4] == '0000'
 
 
-def hash(block):
+def hash_block(block):
     """
     Creates a SHA-256 hash of a Block with ordered Dict for consistent hashes
     """
     block_string = json.dumps(block, sort_keys=True).encode()
 
     return hashlib.sha256(block_string).hexdigest()
-

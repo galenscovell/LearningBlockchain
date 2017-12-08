@@ -5,26 +5,25 @@ The core blockchain.
 """
 
 from time import time
-from urllib.parse import urlparse
 
 from block import Block
-from node import Node
 from transaction import Transaction
 
+from urllib.parse import urlparse
 
-class Blockchain(object):
+
+class Chain(object):
     def __init__(self):
         self.chain = []
         self.current_transactions = []
-        self.nodes = []
+        self.nodes = set()
 
         # Create the genesis block with no predecessors
         self.new_block(proof=100, previous_hash=1)
 
     def register_node(self, address):
         parsed_url = urlparse(address)
-        node = Node(parsed_url.netloc)
-        self.nodes.append(node)
+        self.nodes.add(parsed_url.path)
 
     def new_block(self, proof, previous_hash=None):
         """
@@ -38,9 +37,7 @@ class Blockchain(object):
             previous_hash=previous_hash
         )
 
-        # Reset current list of transactions
-        self.current_transactions = []
-
+        self.current_transactions.clear()
         self.chain.append(block)
 
         return block
@@ -49,8 +46,9 @@ class Blockchain(object):
         """
         Adds a new transaction to the list of transactions
         """
-        transaction = Transaction(sender, recipient, amount)
-        self.current_transactions.append(transaction)
+        self.current_transactions.append(
+            Transaction(sender, recipient, amount)
+        )
 
         return self.last_block.index + 1
 

@@ -16,4 +16,3 @@ class Transaction(dict):
             recipient=recipient,
             amount=amount
         )
-

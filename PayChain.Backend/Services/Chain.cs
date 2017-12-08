@@ -109,17 +109,17 @@ namespace PayChain.Backend.Services
                 {
                     var model = new
                     {
-                        chain = new List<Block>(),
+                        fullChain = new List<Block>(),
                         length = 0
                     };
 
                     var json = await response.Content.ReadAsStringAsync();
                     var data = JsonConvert.DeserializeAnonymousType(json, model);
 
-                    if (data.chain.Count > _chain.Count && Utility.IsValidChain(data.chain))
+                    if (data.fullChain.Count > maxLength && Utility.IsValidChain(data.fullChain))
                     {
-                        maxLength = data.chain.Count;
-                        newChain = data.chain;
+                        maxLength = data.fullChain.Count;
+                        newChain = data.fullChain;
                     }
                 }
             }

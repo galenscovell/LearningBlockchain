@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayChain.Backend", "PayChai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayChain.Common", "PayChain.Common\PayChain.Common.csproj", "{E891193A-2448-45C3-9BE4-475B0960B693}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayChain.Wallet", "PayChain.Wallet\PayChain.Wallet.csproj", "{22C78AB2-EBBF-4D7E-9A51-FA0C312C09D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{E891193A-2448-45C3-9BE4-475B0960B693}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E891193A-2448-45C3-9BE4-475B0960B693}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E891193A-2448-45C3-9BE4-475B0960B693}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22C78AB2-EBBF-4D7E-9A51-FA0C312C09D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22C78AB2-EBBF-4D7E-9A51-FA0C312C09D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22C78AB2-EBBF-4D7E-9A51-FA0C312C09D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22C78AB2-EBBF-4D7E-9A51-FA0C312C09D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

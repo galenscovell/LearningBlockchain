@@ -44,6 +44,10 @@ namespace PayChain.Frontend.Controllers
         {
             return await ProcessRequest(async () =>
             {
+                if (_localBlockChain.GetConnectedNodes().ConnectedNodes.Length == 0)
+                {
+                    return GenerateAcceptedResponse("This node has no connected nodes to reach consensus with");
+                }
                 var response = await _localBlockChain.ReachConsensus();
 
                 return GenerateOkResponse(response);
@@ -106,12 +110,12 @@ namespace PayChain.Frontend.Controllers
         {
             return await ProcessRequest(async () =>
             {
-                if (request.Nodes == null || request.Nodes.Count == 0)
+                if (request.NodeAddresses == null || request.NodeAddresses.Count == 0)
                 {
                     return GenerateBadRequestResponse(new ArgumentException("Node addresses are required"));
                 }
 
-                var response = _localBlockChain.RegisterNodes(request.Nodes);
+                var response = _localBlockChain.RegisterNodes(request.NodeAddresses);
 
                 return GenerateOkResponse(response);
             });

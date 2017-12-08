@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using PayChain.Common.Entities;
 using PayChain.Common.Responses;
 
 namespace PayChain.Backend.Services
@@ -15,7 +14,7 @@ namespace PayChain.Backend.Services
 
         TransactionResponse CreateTransaction(string sender, string recipient, float amount);
 
-        RegisterNodeResponse RegisterNodes(List<Node> nodes);
+        RegisterNodeResponse RegisterNodes(List<string> nodeAddresses);
 
         Task<MineResponse> Mine();
 

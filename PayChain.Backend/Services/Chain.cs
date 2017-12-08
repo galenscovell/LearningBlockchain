@@ -18,9 +18,9 @@ namespace PayChain.Backend.Services
         private readonly List<Node> _nodes = new List<Node>();
 
         private List<Block> _chain = new List<Block>();
-        private Block LastBlock => Enumerable.Last(_chain);
+        private Block LastBlock => _chain.Last();
 
-        public string NodeId { get; private set; }
+        public string NodeId { get; }
 
         public Chain(IRequestClient requestClient)
         {
@@ -59,13 +59,12 @@ namespace PayChain.Backend.Services
             return new ConnectedNodeResponse(_nodes.ToArray());
         }
 
-        public RegisterNodeResponse RegisterNodes(List<Node> nodes)
+        public RegisterNodeResponse RegisterNodes(List<string> nodeAddresses)
         {
             var addedNodes = new List<Node>();
-            foreach (var node in nodes)
+            foreach (var address in nodeAddresses)
             {
-                var url = $"http://{node}";
-                var newNode = new Node { Address = new Uri(url) };
+                var newNode = new Node { Address = new Uri($"http://{address}") };
                 _nodes.Add(newNode);
                 addedNodes.Add(newNode);
             }
@@ -102,7 +101,7 @@ namespace PayChain.Backend.Services
 
             foreach (var node in _nodes)
             {
-                var url = new Uri(node.Address, "/chain");
+                var url = new Uri(node.Address, "/node/confirmed");
                 var request = new HttpRequestMessage(HttpMethod.Get, url);
                 var response = await _requestClient.MakeRequest(request);
 
@@ -140,9 +139,9 @@ namespace PayChain.Backend.Services
             {
                 Index = _chain.Count,
                 Timestamp = DateTime.UtcNow,
-                Transactions = Enumerable.ToList<Transaction>(_currentTransactions),
+                Transactions = _currentTransactions.ToList(),
                 Proof = proof,
-                PreviousHash = previousHash ?? Utility.GetHash(Enumerable.Last<Block>(_chain))
+                PreviousHash = previousHash ?? Utility.GetHash(_chain.Last())
             };
 
             _currentTransactions.Clear();

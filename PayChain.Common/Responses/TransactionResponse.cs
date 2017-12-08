@@ -8,10 +8,10 @@
 
         public string Recipient { get; set; }
 
-        public double Amount { get; set; }
+        public float Amount { get; set; }
 
 
-        public TransactionResponse(int idx, string sender, string recipient, double amount)
+        public TransactionResponse(int idx, string sender, string recipient, float amount)
         {
             Message = "Transaction created";
             Index = idx;

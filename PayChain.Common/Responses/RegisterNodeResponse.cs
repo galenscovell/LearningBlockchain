@@ -2,11 +2,11 @@
 
 namespace PayChain.Common.Responses
 {
-    public class RegisterResponse : BaseResponse
+    public class RegisterNodeResponse : BaseResponse
     {
         public Node[] AddedNodes { get; set; }
 
-        public RegisterResponse(Node[] nodes)
+        public RegisterNodeResponse(Node[] nodes)
         {
             Message = "Registered new node connections";
             AddedNodes = nodes;

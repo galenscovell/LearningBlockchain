@@ -1,1 +1,1 @@
-web: cd $HOME/heroku_output/PayChain.API && dotnet ./PayChain.API.dll --server.urls http://+:$PORT ${CORE_ENVIRONMENT}
+web: cd $HOME/heroku_output/PayChain.Frontend && dotnet ./PayChain.Frontend.dll --server.urls http://+:$PORT ${CORE_ENVIRONMENT}

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PayChain.Backend.Services;
@@ -11,7 +12,7 @@ namespace PayChain.Frontend.Controllers
     {
         private readonly IChain _localBlockChain;
 
-        public NodeController(ILogger logger, IChain blockChain)
+        public NodeController(ILogger<NodeController> logger, IChain blockChain)
             : base(logger)
         {
             _localBlockChain = blockChain;
@@ -50,11 +51,11 @@ namespace PayChain.Frontend.Controllers
         }
 
         /// <summary>
-        /// Get all completed transactions on the blockchain.
+        /// Get all confirmed transactions on the blockchain.
         /// </summary>
         [HttpGet]
-        [Route("details")]
-        public async Task<JsonResult> Completed()
+        [Route("confirmed")]
+        public async Task<JsonResult> Confirmed()
         {
             return await ProcessRequest(async () =>
             {
@@ -65,7 +66,7 @@ namespace PayChain.Frontend.Controllers
         }
 
         /// <summary>
-        /// Get all currently unconfirmed transactions on the blockchain.
+        /// Get all unconfirmed transactions on the blockchain.
         /// </summary>
         [HttpGet]
         [Route("unconfirmed")]
@@ -101,12 +102,15 @@ namespace PayChain.Frontend.Controllers
         /// </summary>
         [HttpPost]
         [Route("register")]
-        public async Task<JsonResult> Register([FromBody] RegisterRequest request)
+        public async Task<JsonResult> Register([FromBody] RegisterNodeRequest request)
         {
-            // TODO: Check that all required values are in request
-
             return await ProcessRequest(async () =>
             {
+                if (request.Nodes == null || request.Nodes.Count == 0)
+                {
+                    return GenerateBadRequestResponse(new ArgumentException("Node addresses are required"));
+                }
+
                 var response = _localBlockChain.RegisterNodes(request.Nodes);
 
                 return GenerateOkResponse(response);
@@ -120,10 +124,18 @@ namespace PayChain.Frontend.Controllers
         [Route("transaction")]
         public async Task<JsonResult> Transaction([FromBody] TransactionRequest request)
         {
-            // TODO: Check that all required values are in request
-
             return await ProcessRequest(async () =>
             {
+                if (string.IsNullOrEmpty(request.Sender) || string.IsNullOrEmpty(request.Recipient))
+                {
+                    return GenerateBadRequestResponse(new ArgumentException("Sender and Recipient are required"));
+                }
+
+                if (request.Amount == 0)
+                {
+                    return GenerateBadRequestResponse(new ArgumentException("Amount must not be zero"));
+                }
+
                 var response = _localBlockChain.CreateTransaction(request.Sender, request.Recipient, request.Amount);
 
                 return GenerateOkResponse(response);

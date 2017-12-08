@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PayChain.Common.Entities;
@@ -41,7 +40,7 @@ namespace PayChain.Backend.Services
             return new UnconfirmedTxResponse(_currentTransactions.ToArray());
         }
 
-        public TransactionResponse CreateTransaction(string sender, string recipient, double amount)
+        public TransactionResponse CreateTransaction(string sender, string recipient, float amount)
         {
             var transaction = new Transaction
             {
@@ -60,7 +59,7 @@ namespace PayChain.Backend.Services
             return new ConnectedNodeResponse(_nodes.ToArray());
         }
 
-        public RegisterResponse RegisterNodes(List<Node> nodes)
+        public RegisterNodeResponse RegisterNodes(List<Node> nodes)
         {
             var addedNodes = new List<Node>();
             foreach (var node in nodes)
@@ -71,7 +70,7 @@ namespace PayChain.Backend.Services
                 addedNodes.Add(newNode);
             }
 
-            return new RegisterResponse(addedNodes.ToArray());
+            return new RegisterNodeResponse(addedNodes.ToArray());
         }
 
         public async Task<MineResponse> Mine()

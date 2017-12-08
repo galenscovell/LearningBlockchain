@@ -2,7 +2,7 @@
 {
     public class TransactionRequest
     {
-        public double Amount { get; set; }
+        public float Amount { get; set; }
 
         public string Sender { get; set; }
 

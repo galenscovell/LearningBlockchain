@@ -59,7 +59,7 @@ namespace PayChain.Frontend
             {
                 opt.SwaggerDoc("v1", new Info { Title = "PayChain", Version = "v1", Description = "" });
 
-                var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "PayChain.xml");
+                var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "PayChain.Frontend.xml");
                 opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, filePath));
             });
 

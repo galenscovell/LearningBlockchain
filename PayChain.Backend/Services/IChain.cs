@@ -13,9 +13,9 @@ namespace PayChain.Backend.Services
 
         ConnectedNodeResponse GetConnectedNodes();
 
-        TransactionResponse CreateTransaction(string sender, string recipient, double amount);
+        TransactionResponse CreateTransaction(string sender, string recipient, float amount);
 
-        RegisterResponse RegisterNodes(List<Node> nodes);
+        RegisterNodeResponse RegisterNodes(List<Node> nodes);
 
         Task<MineResponse> Mine();
 

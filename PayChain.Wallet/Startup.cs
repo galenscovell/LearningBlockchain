@@ -19,7 +19,7 @@ namespace PayChain.Wallet
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Core}/{action=Index}/{id?}");
             });
 
             Bootstrap();

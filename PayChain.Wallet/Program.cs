@@ -13,8 +13,8 @@ namespace PayChain.Wallet
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseElectron(args)
                 .UseStartup<Startup>()
+                .UseElectron(args)
                 .Build();
     }
 }

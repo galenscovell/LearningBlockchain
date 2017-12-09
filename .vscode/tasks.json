@@ -1,0 +1,25 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Service",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/PayChain.Frontend/PayChain.Frontend.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Build Wallet",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/PayChain.Wallet/PayChain.Wallet.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
